@@ -11,7 +11,8 @@ A full-featured Kubernetes deployment stack with MongoDB (StatefulSet), Mongo Ex
 ✅ Internal ClusterIP & external Ingress with routing
 ✅ Secrets & ConfigMaps for secure config management
 📽️ Demo
-📁 GitHub Repo:https://github.com/GIRISHMESH/K8s-mongoexpress-mondodb_stack
+📁 GitHub Repo:https://github.com/GIRISHMESH/K8s-mongoexpress-mondodb_stack.git
+
 
 🧰 Tech Stack
 Kubernetes (kubectl, Minikube, or AKS)
