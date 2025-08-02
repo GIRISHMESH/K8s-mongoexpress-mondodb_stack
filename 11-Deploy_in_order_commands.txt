@@ -1,5 +1,63 @@
+
+
+
+## ✅ Use Paid TLS Certificate in Kubernetes (No cert-manager Needed)
+
+If you've purchased a TLS certificate** from a provider (like GoDaddy, DigiCert, etc.) and received a `.crt` and `.key` file, you do not need 
+ert-manager or Let's Encrypt**. You can manually configure TLS in your Kubernetes project.
+
+---
+
+### 🔧 Step 1: Get Your TLS Certificate Files
+
+Your certificate provider will give you:
+
+ `tls.crt` → Public TLS certificate
+ `tls.key` → Private TLS key
+
+Optional:
+
+ `ca.crt` → Intermediate/Root CA certificate (used in some cases, not required for `kubernetes.io/tls` type)
+
+---
+
+### 📦 Step 2: Create a Kubernetes TLS Secret
+
+If you have `tls.crt` and `tls.key` locally, use this command:
+
+
+kubectl create secret tls mongo-tls-secret \
+  --cert=path/to/tls.crt \
+  --key=path/to/tls.key \
+  -n mongo-stack
+
+
+✅ This will:
+
+* Automatically base64-encode the files
+* Create a `kubernetes.io/tls`-type secret
+* Avoid manual YAML editing mistakes
+
+
+
+OR OR OR OR
+
+### 🧾 (Optional) Manual YAML: If You Want to Hardcode It
+
+If you'd rather write it manually, encode the files like this:
+
+
+base64 -w 0 tls.crt
+# Copy the output for tls.crt
+
+base64 -w 0 tls.key
+# Copy the output for tls.key
+
+
+
 kubectl apply -f manifests/01-namespace.yaml
-kubectl apply -f manifests/02-secret.yaml
+kubectl apply -f manifests/02-mongodb-secret.yaml
+kubectl apply -f manifest/02-mongo-tls-secret
 kubectl apply -f manifests/03-configmap.yaml
 kubectl apply -f manifests/04-storageclass.yaml  # Optional on cloud
 kubectl apply -f manifests/05-mongodb-statefulset.yaml
