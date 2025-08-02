@@ -5,16 +5,22 @@ metadata:
   namespace: mongo-stack
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
 spec:
   ingressClassName: nginx
+  tls:
+    - hosts:
+        - mongo.yourdomain.com    # 👈 your domain here
+      secretName: mongo-tls-secret
   rules:
-  - host: mongoapp.local
-    http:
-      paths:
-      - path: /mongo-express
-        pathType: Prefix
-        backend:
-          service:
-            name: mongo-express
-            port:
-              number: 80
+    - host: mongo.yourdomain.com
+      http:
+        paths:
+          - path: /mongo-express
+            pathType: Prefix
+            backend:
+              service:
+                name: mongo-express
+                port:
+                  number: 80
+
