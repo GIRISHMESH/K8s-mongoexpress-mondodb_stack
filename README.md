@@ -23,17 +23,18 @@ GitHub Actions (optional for CI/CD)
 📂 Folder Structure
 manifests/
 ├── 01-namespace.yaml
-├── 02-secret.yaml
-├── 03-configmap.yaml
-├── 04-storageclass.yaml
-├── 05-mongodb-statefulset.yaml
-├── 06-mongodb-headless-service.yaml
-├── 07-mongodb-clusterip-service.yaml
-├── 08-mongo-express-deployment.yaml
-├── 09-mongo-express-service.yaml
-├── 10-ingress.yaml
-├── 11-replica-init-job.yaml
-└── 12-network-policy.yaml
+├── 02-mongodb-secret.yaml             # ⬅️ MongoDB credentials (Opaque)
+├── 03-mongo-tls-secret.yaml           # ⬅️ TLS Secret (kubernetes.io/tls)
+├── 04-configmap.yaml
+├── 05-storageclass.yaml
+├── 06-mongodb-statefulset.yaml
+├── 07-mongodb-headless-service.yaml
+├── 08-mongodb-clusterip-service.yaml
+├── 09-mongo-express-deployment.yaml
+├── 10-mongo-express-service.yaml
+├── 11-ingress.yaml                    # ⬅️ Contains TLS + path-based routing
+├── 12-replica-init-job.yaml
+└── 13-network-policy.yaml
 
 11-Deploy_in_order_commands
           
