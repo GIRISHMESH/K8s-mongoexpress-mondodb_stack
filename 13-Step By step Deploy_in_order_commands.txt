@@ -53,7 +53,110 @@ base64 -w 0 tls.crt
 base64 -w 0 tls.key
 # Copy the output for tls.key
 
+Yaml file name -->10-ingress.yaml
 
+
+
+--------------------------------------------------------------------
+
+ the NGINX Ingress Controller Pod, because it:
+
+* Handles external traffic coming from Azure Load Balancer.
+* Reads the Ingress resource you already defined.
+* Routes traffic to backend services like `mongo-express`.
+
+But it **won’t be functional** unless NGINX Ingress Controller pod and LoadBalancer service exist in your cluster.
+
+
+## ✅ 𝗛𝗼𝘄 𝘁𝗼 𝗗𝗲𝗽𝗹𝗼𝘆 𝗡𝗚𝗜𝗡𝗫 𝗜𝗻𝗴𝗿𝗲𝘀𝘀 𝗖𝗼𝗻𝘁𝗿𝗼𝗹𝗹𝗲𝗿 (with Azure LoadBalancer)
+
+Run the following to install:
+
+kubectl create namespace ingress-nginx
+
+
+When you apply:
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.10.1/deploy/static/provider/cloud/deploy.yaml
+
+It creates the **entire setup** needed for Ingress on cloud platforms (like Azure):
+
+
+### ✅ **What’s created automatically:**
+
+📍 In **Namespace `ingress-nginx`**:
+
+| Resource Type    | Name                         | Description                                |
+| ---------------- | ---------------------------- | ------------------------------------------ |
+| `Deployment`     | `ingress-nginx-controller`   | Runs the NGINX Ingress Controller pod      |
+| `Pod`            | `ingress-nginx-controller-*` | The controller pod itself                  |
+| `ServiceAccount` | `ingress-nginx`              | For controller to access cluster resources |
+| `ClusterRole`    | `ingress-nginx`              | RBAC permissions                           |
+| `Service`        | `ingress-nginx-controller`   | **Type: LoadBalancer → gets external IP**  |
+| `ConfigMap`      | `ingress-nginx-controller`   | Custom NGINX behavior                      |
+
+---
+
+### ✅ **Check external IP:**
+
+Run this after a few seconds:
+
+
+kubectl get svc -n ingress-nginx
+
+
+You’ll see something like:
+
+NAME                       TYPE           CLUSTER-IP      EXTERNAL-IP     PORT(S)                      AGE
+ingress-nginx-controller   LoadBalancer   10.0.120.234    52.170.5.23     80:31320/TCP, 443:32291/TCP  1m
+
+
+⏳ It may take 30–90 seconds to assign the external IP on Azure.
+
+---
+
+### 🔗 Then update your DNS:
+
+Point:
+mongo.yourdomain.com → 52.170.5.23
+
+
+---
+
+### 🔄 Now, your setup is complete:
+
+User → Azure Public LB → Ingress Controller → `/mongo-express` → `mongo-express` Pod
+
+
+## ✅ Check Load Balancer IP
+
+
+kubectl get svc -n ingress-nginx
+
+
+Output:
+
+NAME                       TYPE           EXTERNAL-IP     PORT(S)
+ingress-nginx-controller   LoadBalancer   52.X.X.X        80:xxxx/TCP, 443:xxxx/TCP
+
+
+That `EXTERNAL-IP` is your **Azure Public Load Balancer IP**.
+
+
+
+## ✅ Configure DNS for your domain
+
+Point your domain to this LB IP:
+
+
+mongo.yourdomain.com  →  52.X.X.X
+
+
+
+
+
+
+kubectl create namespace ingress-nginx
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.10.1/deploy/static/provider/cloud/deploy.yaml
 
 kubectl apply -f manifests/01-namespace.yaml
 kubectl apply -f manifests/02-mongodb-secret.yaml
@@ -68,3 +171,4 @@ kubectl apply -f manifests/09-mongo-express-service.yaml
 kubectl apply -f manifests/10-ingress.yaml
 kubectl apply -f manifests/11-replica-init-job.yaml
 kubectl apply -f manifests/12-network-policy.yaml
+
