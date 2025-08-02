@@ -1,0 +1,12 @@
+kubectl apply -f manifests/01-namespace.yaml
+kubectl apply -f manifests/02-secret.yaml
+kubectl apply -f manifests/03-configmap.yaml
+kubectl apply -f manifests/04-storageclass.yaml  # Optional on cloud
+kubectl apply -f manifests/05-mongodb-statefulset.yaml
+kubectl apply -f manifests/06-mongodb-headless-service.yaml
+kubectl apply -f manifests/07-mongodb-clusterip-service.yaml
+kubectl apply -f manifests/08-mongo-express-deployment.yaml
+kubectl apply -f manifests/09-mongo-express-service.yaml
+kubectl apply -f manifests/10-ingress.yaml
+kubectl apply -f manifests/11-replica-init-job.yaml
+kubectl apply -f manifests/12-network-policy.yaml

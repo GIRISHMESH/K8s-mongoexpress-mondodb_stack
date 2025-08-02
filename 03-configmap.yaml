@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mongo-config
+  namespace: mongo-stack
+data:
+  MONGO_INITDB_DATABASE: admin
+  MONGO_REPLICA_SET_NAME: rs0
