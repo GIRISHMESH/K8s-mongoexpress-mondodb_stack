@@ -4,7 +4,5 @@ metadata:
   name: mongo-config
   namespace: mongo-stack
 data:
-  MONGO_INITDB_DATABASE: admin                       # Used by init Job or MongoDB init
-  MONGO_REPLICA_SET_NAME: rs0                        # Used by MongoDB init Job
-  mongo-replica-set: rs0                             # Used by mongo-express env var substitution
-  mongo-url: "mongodb-0.mongodb-headless.mongo-stack.svc.cluster.local:27017"  # MongoDB hostname for express
+  mongo-url: mongodb://mongodb-0.mongodb-headless.mongo-stack.svc.cluster.local:27017
+  mongo-replica-set: rs0
