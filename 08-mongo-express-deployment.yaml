@@ -41,6 +41,25 @@ spec:
               key: mongo-replica-set
         - name: ME_CONFIG_MONGODB_URL
           value: "mongodb://$(ME_CONFIG_MONGODB_ADMINUSERNAME):$(ME_CONFIG_MONGODB_ADMINPASSWORD)@$(MONGO_URL)/?replicaSet=$(REPLICA_SET)"
+        
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8081
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          timeoutSeconds: 3
+          failureThreshold: 5
+
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8081
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+
         resources:
           requests:
             memory: "256Mi"
