@@ -64,6 +64,11 @@ spec:
             limits:
               memory: "1Gi"
               cpu: "1000m"
+
+              #########Kubernetes automatically creates a unique PVC per replica from this template
+              ###mongo-persistent-storage-mongodb-0
+              ###mongo-persistent-storage-mongodb-1
+              ####mongo-persistent-storage-mongodb-2
   volumeClaimTemplates:
     - metadata:
         name: mongo-persistent-storage
@@ -73,3 +78,4 @@ spec:
         resources:
           requests:
             storage: 10Gi
+
