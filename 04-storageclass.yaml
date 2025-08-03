@@ -1,9 +1,10 @@
 apiVersion: storage.k8s.io/v1
-kind: StorageClass
+kind: StorageClass  ##You define a StorageClass (e.g., mongo-storage) — tells Kubernetes how to dynamically provision storage using an external provisioner like Azure Disk.
 metadata:
   name: mongo-storage
-provisioner: kubernetes.io/azure-disk  # Or any other as per your infra
+provisioner: kubernetes.io/azure-disk  #Dynamic provisioner (e.g., Azure Disk CSI) watches for PVCs → creates a new disk (PV) on demand → binds it to the PVC. Kubernetes uses the CSI driver to talk to Azure and handle disk creation automatically.
 parameters:
   skuName: Standard_LRS
 reclaimPolicy: Retain
-volumeBindingMode: WaitForFirstConsumer
+volumeBindingMode: WaitForFirstConsumer  ###Wait to provision the disk until a Pod actually uses it (WaitForFirstConsumer)
+
