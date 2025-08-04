@@ -10,7 +10,10 @@ spec:
     requests:
       storage: 10Gi
 •	Since no storageClassName is specified,
-•	Kubernetes will use the default StorageClass (determined by annotation):
+
+Kubernetes will use the default StorageClass (determined by annotation):
+
+
 apiVersion: storage.k8s.io/v1           # API version for storage class
 kind: StorageClass                      # Declares a StorageClass object
 metadata:
@@ -23,9 +26,10 @@ reclaimPolicy: Delete                                                           
 
 🔹 This will dynamically provision a Standard_LRS managed disk using Azure Disk.
 ________________________________________
-✅ 2. PVC with Explicit StorageClass
+✅ 2. PVC with Explicit StorageClass managed
 You can choose the StorageClass based on your need:
 ✅ PVC for managed-premium StorageClass
+
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -52,6 +56,8 @@ allowVolumeExpansion: true
 parameters:
   storageaccounttype: Premium_LRS
   kind: Managed
+
+
 •	Use this by specifying storageClassName: managed-premium in your PVC.
 •	It provisions Premium SSDs.
 •	Deletes the disk automatically when PVC is deleted.
@@ -84,7 +90,10 @@ reclaimPolicy: Retain
 parameters:
   skuName: Premium_LRS
   kind: managed
+
+
 •	Custom class for specialized use (e.g., database like MongoDB).
 •	Retain keeps the disk even after PVC deletion.
 •	Gives you full control; you must clean up disks manually.
 ________________________________________
+
