@@ -13,6 +13,18 @@ spec:
       labels:
         app: mongo-express
     spec:
+      initContainers:
+        - name: wait-for-mongodb
+          image: busybox
+          command:
+            - sh
+            - -c
+            - >
+              until nc -z mongodb 27017;
+              do
+                echo "Waiting for MongoDB to be ready...";
+                sleep 2;
+              done
       containers:
         - name: mongo-express
           image: mongo-express:latest
