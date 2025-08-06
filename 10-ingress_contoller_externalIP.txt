@@ -4,7 +4,8 @@ metadata:
   name: ingress-nginx-controller
   namespace: ingress-nginx
 spec:
-  type: LoadBalancer   # 👈 This exposes the controller externally
+  type: LoadBalancer
+  loadBalancerIP: <STATIC_IP>   # 👈 Add this line
   selector:
     app.kubernetes.io/component: controller
   ports:
