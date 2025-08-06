@@ -152,6 +152,22 @@ mongo.yourdomain.com  →  52.X.X.X
 
 
 
+-------------------------------------------------------------------------------------------------------------------
+Static IP  for Ingress   service LB
+
+az network public-ip create \
+  --resource-group <NODE_RESOURCE_GROUP> \
+  --name myStaticPublicIP \
+  --sku Standard \
+  --allocation-method static
+
+Inject  that  static  IP
+helm upgrade --install ingress-nginx ingress-nginx \
+  --repo https://kubernetes.github.io/ingress-nginx \
+  --namespace ingress-nginx \
+  --create-namespace \
+  --set controller.service.loadBalancerIP=<STATIC_IP>
+
 
 
 
@@ -171,4 +187,5 @@ kubectl apply -f manifests/09-mongo-express-service.yaml
 kubectl apply -f manifests/10-ingress.yaml
 kubectl apply -f manifests/11-replica-init-job.yaml
 kubectl apply -f manifests/12-network-policy.yaml
+
 
