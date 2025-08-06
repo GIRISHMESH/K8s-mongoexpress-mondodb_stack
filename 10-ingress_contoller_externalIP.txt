@@ -5,7 +5,9 @@ metadata:
   namespace: ingress-nginx
 spec:
   type: LoadBalancer
-  loadBalancerIP: <STATIC_IP>   # 👈 Add this line
+  loadBalancerIP: <STATIC_IP>   # 👈 Add this line , get  static IP-->az network public-ip create --resource-group <NODE_RESOURCE_GROUP>  --name myStaticPublicIP --sku Standard  --allocation-method static
+
+
   selector:
     app.kubernetes.io/component: controller
   ports:
@@ -15,3 +17,4 @@ spec:
     - name: https
       port: 443
       targetPort: https
+
