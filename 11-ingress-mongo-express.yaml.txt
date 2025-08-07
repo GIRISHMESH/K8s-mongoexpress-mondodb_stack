@@ -16,12 +16,26 @@ spec:
     - host: mongo.yourdomain.com
       http:
         paths:
-          - path: /mongo-express  #####https://mongo.yourdomain.com/mongo-express
+          - path: /mongo-express  #####https://mongo.yourdomain.com/mongo-express  it  will  redirect  here
             pathType: Prefix
             backend:
               service:
                 name: mongo-express       ####### backend mongo-express  cluster IP
                 port:
                   number: 80
+### If  we  want  handle  multipath
+         # - path: /admin
+         #   pathType: Prefix
+          #    backend:
+          #    service:
+          #      name: admin-panel     # Service for admin UI
+          #      port:
+          #        number: 80
 
-
+         # - path: /dashboard
+          #  pathType: Prefix
+          #  backend:
+          #    service:
+           #     name: dashboard-ui    # Service for dashboard UI
+            #    port:
+             #     number: 80
