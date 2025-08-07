@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: mongo-stack-ingress
+  namespace: mongo-stack
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - mongo.yourdomain.com    # 👈 your domain here
+      secretName: mongo-tls-secret
+  rules:
+    - host: mongo.yourdomain.com
+      http:
+        paths:
+          - path: /mongo-express
+            pathType: Prefix
+            backend:
+              service:
+                name: mongo-express       ####### backend mongo-express  cluster IP
+                port:
+                  number: 80
+
