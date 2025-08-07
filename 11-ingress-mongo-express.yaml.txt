@@ -16,11 +16,12 @@ spec:
     - host: mongo.yourdomain.com
       http:
         paths:
-          - path: /mongo-express
+          - path: /mongo-express  #####https://mongo.yourdomain.com/mongo-express
             pathType: Prefix
             backend:
               service:
                 name: mongo-express       ####### backend mongo-express  cluster IP
                 port:
                   number: 80
+
 
