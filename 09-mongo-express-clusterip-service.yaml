@@ -5,9 +5,10 @@ metadata:
   namespace: mongo-stack
 spec:
   selector:
-    app: mongo-express
+    app: mongo-express  #### mongo express  cluster ip  service  name
   ports:
     - protocol: TCP
       port: 80
       targetPort: 8081
+
   type: ClusterIP
