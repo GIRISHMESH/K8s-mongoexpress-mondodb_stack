@@ -75,3 +75,15 @@ spec:
         - name: azure-config
           secret:
             secretName: azure-config-file  # Store azure.json credentials here
+
+
+##azure.json file
+
+###{
+##  "tenantId": "1776d9d0-60fa-4fcd-a55b-bf0540dd9fe1",
+##  "subscriptionId": "373ae6ed-e33f-42a4-9b1f-cdd50a240754",
+###  "resourceGroup": "dns-zones",
+###  "useManagedIdentityExtension": true,
+####  "userAssignedIdentityID": "Fill later"
+##}
+
